@@ -8,7 +8,6 @@ from itertools import product
 
 st.set_page_config(page_title='Discrete Mathematics Toolkit', page_icon='📐', layout='wide')
 
-# ---------- Helpers ----------
 def parse_set(text):
     text = text.strip().strip('{}')
     if not text: return set()
@@ -78,13 +77,11 @@ def draw_graph(G,title,highlight=None,node_colors=None):
     if labels: nx.draw_networkx_edge_labels(G,pos,edge_labels=labels,ax=ax)
     ax.set_title(title); ax.axis('off'); return fig
 
-# ---------- Sidebar ----------
 st.sidebar.title('📚 Modules')
 module=st.sidebar.radio('Choose a module',[
     '🏠 Home','🧠 Logic & Predicate Calculus','🔢 Sets & Relations',
     '🔷 Boolean Algebra','🕸️ Graph Theory','🌳 Trees & MST','🎨 Graph Coloring'])
 
-# ---------- Home ----------
 if module=='🏠 Home':
     st.title('📐 Discrete Mathematics Toolkit')
     st.subheader('Interactive Problem Solver & Visualizer')
@@ -105,7 +102,6 @@ if module=='🏠 Home':
         'Module':['Logic & Predicate Calculus','Sets & Relations','Boolean Algebra','Graph Theory','Trees, MST & Graph Coloring'],
         'Concepts':['Connectives, equivalence, inference, quantifiers','Relations, equivalence, partial order','Boolean functions, normal forms, switching','Paths, cycles, matrices, connectivity','Trees, cut sets, MST, chromatic number']}),use_container_width=True,hide_index=True)
 
-# ---------- Logic ----------
 elif module=='🧠 Logic & Predicate Calculus':
     st.title('🧠 Logic & Predicate Calculus')
     t1,t2,t3=st.tabs(['Truth Table','Equivalence','Inference Helper'])
@@ -141,7 +137,6 @@ elif module=='🧠 Logic & Predicate Calculus':
                 if p[1] in ('~'+right,'~('+right+')') and c=='~'+left: found.append('Modus Tollens')
             st.success('Detected: '+', '.join(found)) if found else st.info('No supported basic pattern detected.')
 
-# ---------- Sets ----------
 elif module=='🔢 Sets & Relations':
     st.title('🔢 Sets & Relations'); t1,t2=st.tabs(['Set Operations','Relations'])
     with t1:
@@ -164,7 +159,6 @@ elif module=='🔢 Sets & Relations':
             if ref and sym and trans: st.success('✓ Equivalence relation')
             if ref and anti and trans: st.success('✓ Partial-order relation')
 
-# ---------- Boolean ----------
 elif module=='🔷 Boolean Algebra':
     st.title('🔷 Boolean Algebra')
     expr=st.text_input('Boolean expression','A AND B OR A AND NOT B')
@@ -175,7 +169,6 @@ elif module=='🔷 Boolean Algebra':
     st.divider(); st.subheader('📘 Common Boolean Laws')
     st.dataframe(pd.DataFrame({'Law':['Identity','Domination','Idempotent','Complement','Double Negation','De Morgan'],'Expression':['A + 0 = A, A·1 = A','A + 1 = 1, A·0 = 0','A + A = A, A·A = A','A + A′ = 1, A·A′ = 0','(A′)′ = A','(A+B)′ = A′·B′']}),use_container_width=True,hide_index=True)
 
-# ---------- Graphs ----------
 elif module=='🕸️ Graph Theory':
     st.title('🕸️ Graph Theory')
     text=st.text_area('Edges (one per line as A,B)','A,B\nA,C\nB,D\nC,D\nD,E')
@@ -191,7 +184,6 @@ elif module=='🕸️ Graph Theory':
             st.success('✓ Eulerian graph') if nx.is_eulerian(G) else st.info('Not Eulerian')
         except Exception as ex: st.error(f'Could not build graph: {ex}')
 
-# ---------- MST ----------
 elif module=='🌳 Trees & MST':
     st.title('🌳 Trees & Minimum Spanning Tree')
     text=st.text_area('Weighted edges (A,B,weight)','A,B,4\nA,C,2\nB,C,5\nB,D,3\nC,D,1\nC,E,6\nD,E,2')
@@ -208,7 +200,6 @@ elif module=='🌳 Trees & MST':
                 st.caption('Kruskal: choose lightest safe edges. Prim: grow the tree from a starting vertex. The current implementation computes the MST and visualizes the selected edges.')
         except Exception as ex: st.error(f'Could not compute MST: {ex}')
 
-# ---------- Coloring ----------
 elif module=='🎨 Graph Coloring':
     st.title('🎨 Graph Coloring & Exam Timetable')
     text=st.text_area('Conflicts (one per line as Subject1,Subject2)','Math,Physics\nMath,DSA\nPhysics,DBMS\nDSA,DBMS\nDBMS,OS\nDSA,OS\nOS,Networks')
